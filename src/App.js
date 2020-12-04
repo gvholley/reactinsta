@@ -1,5 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
+import Post from './Post.js';
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         />
       </div>
       <h1>Hi</h1>
+      <Post />
       {/* Posts */}
       {/* Posts */}
     </div>
