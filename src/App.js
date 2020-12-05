@@ -1,9 +1,21 @@
+import React, { useEffect, useState } from "react";
 import logo from './logo.svg';
 import './App.css';
 import Post from './Post.js';
 
 function App() {
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState([
+    {
+      username: "Kaori",
+      caption: "WOW",
+      imageUrl: "https://pbs.twimg.com/media/EnrPcbGVoAEZe2P?format=jpg&name=large"
+    },
+    {
+      username: "Kaori",
+      caption: "WOW",
+      imageUrl: "https://pbs.twimg.com/media/EnrPcbGVoAEZe2P?format=jpg&name=large"
+    }
+  ]);
 
   return (
     <div className="App">
@@ -15,9 +27,15 @@ function App() {
         />
       </div>
 
+      {
+        posts.map(post => (
+          <Post username={post.username} caption={post.caption} imageUrl={post.imageUrl} />
+          ))
+      }
+
       <Post username="Kaori" caption="WOW" imageUrl="https://pbs.twimg.com/media/EnrPcbGVoAEZe2P?format=jpg&name=large" />
-      <Post />
-      <Post />
+      <Post username="Kaori" caption="WOW" imageUrl="https://pbs.twimg.com/media/EnrPcbGVoAEZe2P?format=jpg&name=large" />
+      <Post username="Kaori" caption="WOW" imageUrl="https://pbs.twimg.com/media/EnrPcbGVoAEZe2P?format=jpg&name=large" />
 
     </div>
   );
