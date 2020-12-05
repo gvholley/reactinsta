@@ -19,5 +19,5 @@ function Post({ username, caption, imageURL}) {
     </div>
     )
 }
-export default Post
+export default Post;
 
