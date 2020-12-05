@@ -3,6 +3,8 @@ import './App.css';
 import Post from './Post.js';
 
 function App() {
+  const [posts, setPosts] = useState([]);
+
   return (
     <div className="App">
       <div className="app_header">
@@ -12,10 +14,11 @@ function App() {
           alt="logo"
         />
       </div>
-      <h1>Hi</h1>
+
+      <Post username="Kaori" caption="WOW" imageUrl="https://pbs.twimg.com/media/EnrPcbGVoAEZe2P?format=jpg&name=large" />
       <Post />
-      {/* Posts */}
-      {/* Posts */}
+      <Post />
+
     </div>
   );
 }
