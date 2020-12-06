@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import logo from './logo.svg';
 import './App.css';
 import Post from './Post.js';
-import db from './firebase';
+import { db, auth } from './firebase';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Button from '@material-ui/core/Button';
@@ -38,6 +38,17 @@ function App() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
+  const [user, setUser] = useState(null);
+
+  useEffect(()=> {
+    auth.onAuthStateChanged((authUser) => {
+      if (authUser) {
+        console.log(authUser);
+      } else {
+        setUser(null);
+      }
+    })
+  }, []);
 
   useEffect(() => {
     db.collection('posts').onSnapshot(snapshot => {
@@ -49,7 +60,10 @@ function App() {
   }, []);
 
   const signUp = (event) => {
+    event.preventDefault();
 
+    auth.createUserWithEmailAndPassword(email, password)
+    .catch(error) => alert(error.message))
   };
 
   return (
@@ -59,7 +73,9 @@ function App() {
         onClose={() => setOpen(false)}
       >
       <div style={modalStyle} className={classes.paper}>
+
       <center>
+       <form className="app_signup">
         <img
           className="app_headerImage"
           src="https://i.pinimg.com/originals/fc/26/50/fc26502254db62ce6b29debec1a56e80.png"
@@ -84,7 +100,8 @@ function App() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <Button onClick={signUp}>Sign Up</Button>
+        <Button type="submit" onClick={signUp}>Sign Up</Button>
+      </form>
       </center>
       </div>
 
