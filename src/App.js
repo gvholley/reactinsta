@@ -4,17 +4,54 @@ import './App.css';
 import Post from './Post.js';
 import db from './firebase';
 
+function getModalStyle() {
+  const top = 50 + rand();
+  const left = 50 + rand();
+
+  return {
+    top: `${top}%`,
+    left: `${left}%`,
+    transform: `translate(-${top}%, -${left}%)`,
+  };
+}
+
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    position: 'absolute',
+    width: 400,
+    backgroundColor: theme.palette.background.paper,
+    border: '2px solid #000',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+  },
+}));
+
 function App() {
+  const class = useStyles();
   const [posts, setPosts] = useState([]);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     db.collection('posts').onSnapshot(snapshot => {
-      setPosts(snapshot.docs.map(doc => doc.data()));
+      setPosts(snapshot.docs.map(doc => ({
+        id: doc.id,
+        post: doc.data()
+      })));
     })
   }, []);
 
   return (
     <div className="App">
+      <Modal
+        open={open}
+        onClose={() => setOpen(false)}
+      >
+      <div style={modalStyle} className={classes.paper}>
+        <h2>Modal Time</h2>
+      </div>
+        {body}
+      </Modal>
+
       <div className="app_header">
         <img
           className="app_headerImage"
@@ -24,14 +61,13 @@ function App() {
       </div>
 
       {
-        posts.map(post => (
-          <Post username={post.username} caption={post.caption} imageUrl={post.imageUrl} />
+        posts.map(({id, post}) => (
+          <Post key={id} caption={post.caption} username={post.username} imageUrl={post.imageUrl} />
           ))
       }
 
-      <Post username="Kaori" caption="WOW" imageUrl="https://pbs.twimg.com/media/EnrPcbGVoAEZe2P?format=jpg&name=large" />
-      <Post username="Kaori" caption="WOW" imageUrl="https://pbs.twimg.com/media/EnrPcbGVoAEZe2P?format=jpg&name=large" />
-      <Post username="Kaori" caption="WOW" imageUrl="https://pbs.twimg.com/media/EnrPcbGVoAEZe2P?format=jpg&name=large" />
+
+
 
     </div>
   );
