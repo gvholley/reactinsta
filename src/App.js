@@ -2,20 +2,16 @@ import React, { useEffect, useState } from "react";
 import logo from './logo.svg';
 import './App.css';
 import Post from './Post.js';
+import db from './firebase';
 
 function App() {
-  const [posts, setPosts] = useState([
-    {
-      username: "Kaori",
-      caption: "WOW",
-      imageUrl: "https://pbs.twimg.com/media/EnrPcbGVoAEZe2P?format=jpg&name=large"
-    },
-    {
-      username: "Kaori",
-      caption: "WOW",
-      imageUrl: "https://pbs.twimg.com/media/EnrPcbGVoAEZe2P?format=jpg&name=large"
-    }
-  ]);
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    db.collection('posts').onSnapshot(snapshot => {
+      setPosts(snapshot.docs.map(doc => doc.data()));
+    })
+  }, []);
 
   return (
     <div className="App">

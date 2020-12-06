@@ -1,6 +1,6 @@
 import firebase from "firebase";
 
-const firebaseApp = firebase.intializeApp({
+const firebaseApp = firebase.initializeApp({
   apiKey: "AIzaSyD36An4pSkfaOAKypF1v2oZdUJY_9I_mMU",
   authDomain: "reactinsta-e5ec7.firebaseapp.com",
   databaseURL: "https://reactinsta-e5ec7-default-rtdb.firebaseio.com",
