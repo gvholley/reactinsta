@@ -35,6 +35,7 @@ function App() {
   const [modalStyle] = useState(getModalStyle);
   const [posts, setPosts] = useState([]);
   const [open, setOpen] = useState(false);
+  const [openSignIn, setOpenSignIn] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
@@ -81,7 +82,14 @@ function App() {
         displayName: username
       })
     })
+    setOpen(false);
   };
+
+  const signIn = (event) => {
+    event.preventDefault();
+    auth.signInWithEmailAndPassword(email, password)
+    setOpenSignIn(false);
+  }
 
   return (
     <div className="App">
@@ -102,7 +110,46 @@ function App() {
         <Input
           placeholder="username"
           type="text"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
+        <Input
+          placeholder="email"
+          type="text"
           value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <Input
+          placeholder="password"
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <Button type="submit" onClick={signUp}>Sign Up</Button>
+      </form>
+      </center>
+      </div>
+
+      </Modal>
+
+            <Modal
+        open={openSignIn}
+        onClose={() => setOpenSignIn(false)}
+      >
+      <div style={modalStyle} className={classes.paper}>
+
+      <center>
+       <form className="app_signup">
+        <img
+          className="app_headerImage"
+          src="https://i.pinimg.com/originals/fc/26/50/fc26502254db62ce6b29debec1a56e80.png"
+          alt="logo"
+        />
+
+        <Input
+          placeholder="username"
+          type="text"
+          value={username}
           onChange={(e) => setUsername(e.target.value)}
         />
         <Input
@@ -136,7 +183,7 @@ function App() {
       <Button onClick={() =>auth.signOut()}>Logout</Button>
       ): (
       <div className="app_loginContainer">
-        <Button onClick={() => setOpen(true)}>Sign in</Button>
+        <Button onClick={() => setOpenSignIn(true)}>Sign in</Button>
         <Button onClick={() => setOpen(true)}>Sign up</Button>
       </div>
 
