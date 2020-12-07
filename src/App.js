@@ -41,14 +41,27 @@ function App() {
   const [user, setUser] = useState(null);
 
   useEffect(()=> {
-    auth.onAuthStateChanged((authUser) => {
+    const unsubscribe = auth.onAuthStateChanged((authUser) => {
       if (authUser) {
         console.log(authUser);
+        setUser(authUser);
+
+      if (authUser.displayName) {
+      } else {
+        return authUser.updateProfile({
+          displayName: username,
+        });
+      }
+
       } else {
         setUser(null);
       }
     })
-  }, []);
+
+    return () => {
+      unsubscribe();
+    }
+  }, [user, username]);
 
   useEffect(() => {
     db.collection('posts').onSnapshot(snapshot => {
@@ -63,7 +76,11 @@ function App() {
     event.preventDefault();
 
     auth.createUserWithEmailAndPassword(email, password)
-    .catch(error) => alert(error.message))
+    .then((authUser) => {
+      authUser.user.updateProfile({
+        displayName: username
+      })
+    })
   };
 
   return (
@@ -115,13 +132,21 @@ function App() {
         />
       </div>
 
-      <Button onClick={() => setOpen(true)}>Sign up</Button>
+      { user ? (
+      <Button onClick={() =>auth.signOut()}>Logout</Button>
+      ): (
+      <div className="app_loginContainer">
+        <Button onClick={() => setOpen(true)}>Sign in</Button>
+        <Button onClick={() => setOpen(true)}>Sign up</Button>
+      </div>
 
+      )}
       {
         posts.map(({id, post}) => (
           <Post key={id} caption={post.caption} username={post.username} imageUrl={post.imageUrl} />
           ))
       }
+
 
 
 
