@@ -101,8 +101,6 @@ function App() {
         <h3>Sorry you need to login to upload</h3>
         )}
 
-   {/* File Picker */}
-    {/* Post Button */}
       <Modal
         open={open}
         onClose={() => setOpen(false)}
