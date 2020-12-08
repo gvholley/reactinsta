@@ -16,6 +16,8 @@
   background-color: white;
   padding: 20px;
   border-bottom: 1px solid gray;
+  display: flex;
+  justify-content: space-between;
 }
 
 .app_signup {
