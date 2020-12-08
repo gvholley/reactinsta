@@ -7,6 +7,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Button from '@material-ui/core/Button';
 import Input from '@material-ui/core/Input';
+import ImageUpload from './ImageUpload.js';
 
 function getModalStyle() {
   const top = 50;
@@ -93,6 +94,15 @@ function App() {
 
   return (
     <div className="App">
+
+      {user?.displayName ? (
+      <ImageUpload username={user.displayName} />
+      ): (
+        <h3>Sorry you need to login to upload</h3>
+        )}
+
+   {/* File Picker */}
+    {/* Post Button */}
       <Modal
         open={open}
         onClose={() => setOpen(false)}
